@@ -684,32 +684,10 @@
                 this.dndZone = new DnDFileZone();
                 this.dndZone.render(this.view.$panel.find("#area-dnd-file"));
 
+                // PW Presentation creates presentations only. The DOCX, XLSX and
+                // PDF-form tiles are intentionally absent.
                 const docGrid = new DocumentCreationGrid({
                     documentTypes: [
-                        {
-                            id: 'word',
-                            title: utils.Lang.newDoc,
-                            langKey: 'newDoc',
-                            formatLabel: {
-                                value: 'DOCX',
-                                gradientColorStart: '#4298C5',
-                                gradientColorEnd: '#2D84B2',
-                                bgColorWinXP: '#287ca9',
-                            },
-                            icon: '#docx-big',
-                        },
-                        {
-                            id: 'cell',
-                            title: utils.Lang.newXlsx,
-                            langKey: 'newXlsx',
-                            formatLabel: {
-                                value: 'XLSX',
-                                gradientColorStart: '#5BB514',
-                                gradientColorEnd: '#318C2B',
-                                bgColorWinXP: '#3aa133',
-                            },
-                            icon: '#xlsx-big',
-                        },
                         {
                             id: 'slide',
                             title: utils.Lang.newPptx,
@@ -721,18 +699,6 @@
                                 bgColorWinXP: '#f36700',
                             },
                             icon: '#pptx-big',
-                        },
-                        {
-                            id: 'form',
-                            title: utils.Lang.newForm,
-                            langKey: 'newForm',
-                            formatLabel: {
-                                value: 'PDF',
-                                gradientColorStart: '#F36653',
-                                gradientColorEnd: '#D2402D',
-                                bgColorWinXP: '#e54d39',
-                            },
-                            icon: '#pdf-big',
                         }
                     ],
                     onDocumentSelect: (docType) => {

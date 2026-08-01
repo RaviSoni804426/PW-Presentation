@@ -1,5 +1,5 @@
 
-TARGET = DesktopEditors
+TARGET = PWPresentation
 DESTDIR = $$PWD
 
 include(defaults.pri)
@@ -19,7 +19,7 @@ SOURCES += \
 
 #DEFINES += _GLIBCXX_USE_CXX11_ABI=0
 DEFINES += __DONT_WRITE_IN_APP_TITLE
-DEFINES += APP_ICON_PATH=\"./res/icons/desktopeditors.ico\"
+DEFINES += APP_ICON_PATH=\"./res/icons/pwpresentation.ico\"
 
 message($$PLATFORM_BUILD)
 

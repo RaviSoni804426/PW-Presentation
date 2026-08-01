@@ -141,12 +141,18 @@ def get_build_param(minimize=True):
   params = ["--beta=" + beta]
   return params + (["--minimize"] if minimize_scripts else ["--no-minimize"])
 
+# PW Presentation ships the presentation editor only, so the sdkjs bundles for
+# word/cell/visio are never produced. Their *sources* stay in the tree because
+# sdkjs/configs/slide.json pulls 197 word/ and 10 cell/ files into the slide
+# bundle (see ANALYSIS.md).
+PRODUCT_PARAM = ["--product", "slide"]
+
 def build_sdk_desktop(directory):
-  _run_build_py(directory, get_build_param() + ["--desktop"] + base.sdkjs_addons_param() + base.sdkjs_addons_desktop_param())
+  _run_build_py(directory, get_build_param() + ["--desktop"] + PRODUCT_PARAM + base.sdkjs_addons_param() + base.sdkjs_addons_desktop_param())
   return
 
 def build_sdk_builder(directory):
-  _run_build_py(directory, get_build_param() + base.sdkjs_addons_param() + ["--map"])
+  _run_build_py(directory, get_build_param() + PRODUCT_PARAM + base.sdkjs_addons_param() + ["--map"])
   return
 
 def build_sdk_native(directory, minimize=True):

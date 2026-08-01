@@ -994,12 +994,10 @@ void CAscApplicationManagerWrapper::handleInputCmd(const std::vector<wstring>& v
                                     i == 1 ? COpenOptions::eOpenMode::view : COpenOptions::eOpenMode::edit;
             }else
             if ( check_param(arg, L"--new" ) ) {
+                // PW Presentation only creates presentations. Any --new:* variant
+                // inherited from the multi-editor build resolves to PPTX.
                 open_opts.srctype = etNewFile;
-                open_opts.format = arg.rfind(L"cell") != wstring::npos ? AVS_OFFICESTUDIO_FILE_SPREADSHEET_XLSX :
-                                    arg.rfind(L"slide") != wstring::npos ? AVS_OFFICESTUDIO_FILE_PRESENTATION_PPTX :
-                                    // arg.rfind(L"draw") != wstring::npos ? AVS_OFFICESTUDIO_FILE_DRAW_VSDX :
-                                    arg.rfind(L"form") != wstring::npos ? AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCXF :
-                            /*if ( line.rfind(L"word") != wstring::npos )*/ AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCX;
+                open_opts.format = AVS_OFFICESTUDIO_FILE_PRESENTATION_PPTX;
 
                 open_opts.name = AscAppManager::newFileName(open_opts.format);
             } else continue;
@@ -1270,20 +1268,14 @@ void CAscApplicationManagerWrapper::startApp()
     if ( _files ) {
         _window->doOpenLocalFiles(*_files);
         if ( getInstance().m_private->allowedCreateLocalFile() ) {
-            QRegularExpression re("^--new:(word|cell|slide)");
+            // PW Presentation only creates presentations; every --new:* variant
+            // inherited from the multi-editor build resolves to PPTX.
             QStringListIterator i(*_files);
             while (i.hasNext()) {
                 QString n = i.next();
                 if ( n.startsWith("--new:") ) {
-                    QRegularExpressionMatch match = re.match(n);
-                    if ( match.hasMatch() ) {
-                        int _format = AVS_OFFICESTUDIO_FILE_UNKNOWN;
-                        if ( match.captured(1) == "word" ) _format = AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCX; else
-                        if ( match.captured(1) == "cell" ) _format = AVS_OFFICESTUDIO_FILE_SPREADSHEET_XLSX; else
-                        if ( match.captured(1) == "slide" ) _format = AVS_OFFICESTUDIO_FILE_PRESENTATION_PPTX;
-
-                        _window->createLocalFile(AscAppManager::newFileName(_format), _format);
-                    }
+                    const int _format = AVS_OFFICESTUDIO_FILE_PRESENTATION_PPTX;
+                    _window->createLocalFile(AscAppManager::newFileName(_format), _format);
                 }
             }
         }
@@ -1298,7 +1290,7 @@ void CAscApplicationManagerWrapper::startApp()
                                                         (arg.rfind(L"--edit", 0) != std::string::npos) || (arg.rfind(L"--new", 0) != std::string::npos);
                                         }) != std::end(in_args);
     if ( !files_in_args && open_in_new_window ) {
-        in_args.push_back(L"--new:word");
+        in_args.push_back(L"--new:slide");
     }
 
     handleInputCmd(in_args);

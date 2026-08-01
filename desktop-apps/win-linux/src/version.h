@@ -49,10 +49,10 @@
 # define VER_STR_LONG(mj,mn,b,r)    VER_STRINGIFY(mj) "." VER_STRINGIFY(mn) "." VER_STRINGIFY(b) "." VER_STRINGIFY(r) "\0"
 # define VER_STR_SHORT(mj,mn)       VER_STRINGIFY(mj) "." VER_STRINGIFY(mn) "\0"
 
-# define VER_NUM_MAJOR              5
-# define VER_NUM_MINOR              3
-# define VER_NUM_BUILD              95
-# define VER_NUM_REVISION           508
+# define VER_NUM_MAJOR              1
+# define VER_NUM_MINOR              0
+# define VER_NUM_BUILD              0
+# define VER_NUM_REVISION           1
 # define VER_NUMBER                 VER_NUM_MAJOR,VER_NUM_MINOR,VER_NUM_BUILD,VER_NUM_REVISION
 # define VER_STRING                 VER_STR_LONG(VER_NUM_MAJOR,VER_NUM_MINOR,VER_NUM_BUILD,VER_NUM_REVISION)
 # define VER_STRING_SHORT           VER_STR_SHORT(VER_NUM_MAJOR,VER_NUM_MINOR)
@@ -64,16 +64,19 @@
 # define VER_PRODUCTVERSION_STR     VER_STRING_SHORT
 #endif
 
-#define VER_COMPANYNAME_STR         "Ascensio System SIA\0"
-#define VER_LEGALCOPYRIGHT_STR      "© Ascensio System SIA " TO_STR(COPYRIGHT_YEAR) ". All rights reserved.\0"
-#define VER_COMPANYDOMAIN_STR       "www.onlyoffice.com\0"
+/* PW Presentation is a derivative of ONLYOFFICE Desktop Editors and remains
+ * licensed under the GNU AGPL v3; the upstream copyright notice is retained
+ * below alongside the product identity shown in Explorer. */
+#define VER_COMPANYNAME_STR         "PW Presentation\0"
+#define VER_LEGALCOPYRIGHT_STR      "Based on ONLYOFFICE © Ascensio System SIA " TO_STR(COPYRIGHT_YEAR) ". Licensed under GNU AGPL v3.\0"
+#define VER_COMPANYDOMAIN_STR       "github.com/RaviSoni804426/PW-Presentation\0"
 #define ABOUT_COPYRIGHT_STR         VER_LEGALCOPYRIGHT_STR
-#define VER_FILEDESCRIPTION_STR     "ONLYOFFICE Desktop Editors\0"
-#define VER_INTERNALNAME_STR        "Desktop Editors\0"
+#define VER_FILEDESCRIPTION_STR     "PW Presentation - Presentation Editor\0"
+#define VER_INTERNALNAME_STR        "PWPresentation\0"
 #define VER_LEGALTRADEMARKS1_STR    "All Rights Reserved\0"
 #define VER_LEGALTRADEMARKS2_STR    VER_LEGALTRADEMARKS1_STR
-#define VER_ORIGINALFILENAME_STR    "documenteditor.exe\0"
-#define VER_PRODUCTNAME_STR         "ONLYOFFICE\0"
+#define VER_ORIGINALFILENAME_STR    "PWPresentation.exe\0"
+#define VER_PRODUCTNAME_STR         "PW Presentation\0"
 
 #define VER_LANG_AND_CHARSET        "040904E4"
 #define VER_LANG_ID                 0x0409

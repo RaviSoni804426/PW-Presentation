@@ -36,7 +36,8 @@
 #define NTDDI_VERSION NTDDI_WIN7
 #define WIN32_LEAN_AND_MEAN
 #define STRICT_TYPED_ITEMIDS
-#define MAX_TASK_NUM 4
+// PW Presentation exposes a single jump-list task: create a new presentation.
+#define MAX_TASK_NUM 1
 #define ICON_OFFSET 14
 
 #include "jumplist.h"
@@ -115,10 +116,7 @@ HRESULT _AddTasksToList(ICustomDestinationList *pcdl)
             int stringId;
         }
         tasks[MAX_TASK_NUM] = {
-            {L"--new:word",  IDS_JUMP_DOCX},
-            {L"--new:cell",  IDS_JUMP_XLSX},
             {L"--new:slide", IDS_JUMP_PPTX},
-            {L"--new:form",  IDS_NEW_PDF},
         };
 
         IShellLink * psl;

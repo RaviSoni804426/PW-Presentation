@@ -260,17 +260,8 @@ QStringList CFileDialogWrapper::modalOpen(const QString& path, const QString& fi
     QString _sel_filter = m_mapFilters[AVS_OFFICESTUDIO_FILE_UNKNOWN];
     if ( _filter_.isEmpty() ) {
 //        _filter_ = joinFilters();
-        _filter_ =  tr("Text documents") +
-#ifndef __LOCK_OFORM_FORMATS
-                        " (*.docx *.doc *.odt *.ott *.rtf *.docm *.dot *.dotx *.dotm *.fb2 *.fodt *.hml *.wps *.wpt *.xml *.pdf *.djv *.djvu *.md *.docxf *.oform *.sxw *.stw *.xps *.oxps *.pages *.hwp *.hwpx);;" +
-#else
-                        " (*.docx *.doc *.odt *.ott *.rtf *.docm *.dot *.dotx *.dotm *.fb2 *.fodt *.hml *.wps *.wpt *.xml *.pdf *.djv *.djvu *.md *.sxw *.stw *.xps *.oxps);;" +
-#endif
-                    tr("Spreadsheets") + " (*.xlsx *.xls *.xlsm *.xlsb *.ods *.ots *.xltx *.xltm *.xml *.fods *.et *.ett *.sxc *.numbers);;" +
-                    tr("Presentations") + " (*.pptx *.ppt *.odp *.odg *.otp *.ppsm *.pptm *.ppsx *.pps *.potx *.pot *.potm *.fodp *.dps *.dpt *.sxi *.key);;" +
-                    tr("Visio diagram") + " (*.vsdx *.vssx *.vstx *.vsdm *.vssm *.vstm);;" +
-                    tr("Web Page") + " (*.html *.htm *.mht *.mhtml *.epub);;" +
-                    tr("Text files") + " (*.txt *.csv *.tsv)";
+        // PW Presentation opens presentation formats only.
+        _filter_ =  tr("Presentations") + " (*.pptx *.ppt *.odp *.odg *.otp *.ppsm *.pptm *.ppsx *.pps *.potx *.pot *.potm *.fodp *.dps *.dpt *.sxi *.key)";
 //#ifdef __linux__
         _sel_filter = tr("All supported files") + " " + joinExtentions(_filter_);
         _filter_.prepend(_sel_filter + ";;");
@@ -360,20 +351,17 @@ QStringList CFileDialogWrapper::modalOpenPlugins(const QString& path)
     return modalOpen(path, _filter, &_plugins_filter, true);
 }
 
+// PW Presentation has no document or spreadsheet editor. These two entry points
+// are kept so the existing call sites keep compiling, but they offer the same
+// presentation filter as modalOpenPresentations().
 QStringList CFileDialogWrapper::modalOpenDocuments(const QString& path, bool multi)
 {
-    QString filter = m_mapFilters[AVS_OFFICESTUDIO_FILE_UNKNOWN];
-    filter.prepend(tr("Text documents") + " (*.docx *.doc *.odt *.ott *.rtf *.docm *.dotx *.dotm *.fb2 *.fodt *.hml *.wps *.wpt *.xml);;");
-
-    return modalOpen(path, filter, &filter, multi);
+    return modalOpenPresentations(path, multi);
 }
 
 QStringList CFileDialogWrapper::modalOpenSpreadsheets(const QString& path, bool multi)
 {
-    QString filter = m_mapFilters[AVS_OFFICESTUDIO_FILE_UNKNOWN];
-    filter.prepend(tr("Spreadsheets") + " (*.xlsx *.xls *.ods *.ots *.csv *.tsv *.xltx *.xltm *.fods *.et *.ett);;");
-
-    return modalOpen(path, filter, nullptr, multi);
+    return modalOpenPresentations(path, multi);
 }
 
 QStringList CFileDialogWrapper::modalOpenPresentations(const QString& path, bool multi)
@@ -386,13 +374,7 @@ QStringList CFileDialogWrapper::modalOpenPresentations(const QString& path, bool
 
 QStringList CFileDialogWrapper::modalOpenForEncrypt(const QString& path, bool multi)
 {
-#ifndef __LOCK_OFORM_FORMATS
-    QString _filter = tr("Text documents") + " (*.docx *.docxf *.docm *.dotm *.dotx *.oform);;" +
-#else
-    QString _filter = tr("Text documents") + " (*.docx *.docm *.dotm *.dotx);;" +
-#endif
-                        tr("Spreadsheets") + " (*.xlsx *.xlsm *.xltm *.xltx);;" +
-                        tr("Presentations") + " (*.potm *.potx *.ppsm *.pptm *.ppsx *.pptx)";
+    QString _filter = tr("Presentations") + " (*.potm *.potx *.ppsm *.pptm *.ppsx *.pptx)";
 
     const QString _all_supported = tr("All supported files") + " " + joinExtentions(_filter);
     _filter.prepend(_all_supported + ";;");
