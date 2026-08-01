@@ -4,6 +4,37 @@ import base
 import os
 import platform
 
+def _find_vs_hosting_v142(programFilesDir):
+  """Locate a Visual Studio install that carries the v142 (VS2019) toolset.
+
+  Returns its VC/Auxiliary/Build directory and records the toolset version in
+  the 'vcvars-ver' option so base.vcvars_ver_arg() pins vcvarsall to v142.
+  Falls back to the newest install found if v142 is absent anywhere."""
+  import glob
+  roots = []
+  for pf in {programFilesDir, base.get_env("ProgramFiles"), base.get_env("ProgramFiles(x86)")}:
+    if pf:
+      roots += glob.glob(pf + "/Microsoft Visual Studio/*/*/VC/Auxiliary/Build")
+  roots = sorted(set(p.replace("\\", "/") for p in roots), reverse=True)
+
+  fallback = ""
+  for build_dir in roots:
+    if not base.is_dir(build_dir):
+      continue
+    if not fallback:
+      fallback = build_dir
+    msvc_dir = build_dir[:-len("/Auxiliary/Build")] + "/Tools/MSVC"
+    for toolset in sorted(glob.glob(msvc_dir + "/14.2*"), reverse=True):
+      if base.is_dir(toolset):
+        options["vcvars-ver"] = "14.2"
+        print("using v142 toolset from " + build_dir)
+        return build_dir
+
+  if fallback:
+    print("WARNING: v142 toolset not found; falling back to " + fallback)
+  return fallback
+
+
 def parse():
   configfile = open(base.get_script_dir() + "/../config", "r")
   configOptions = {}
@@ -112,12 +143,16 @@ def parse():
     if ("2015" == options["vs-version"]):
       options["vs-path"] = programFilesDir + "/Microsoft Visual Studio 14.0/VC"
     elif ("2019" == options["vs-version"]):
-      if base.is_dir(programFilesDir + "/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build"):
-        options["vs-path"] = programFilesDir + "/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build"
-      elif base.is_dir(programFilesDir + "/Microsoft Visual Studio/2019/Professional/VC/Auxiliary/Build"):
-        options["vs-path"] = programFilesDir + "/Microsoft Visual Studio/2019/Professional/VC/Auxiliary/Build"
+      for edition in ("Enterprise", "Professional", "Community", "BuildTools"):
+        candidate = programFilesDir + "/Microsoft Visual Studio/2019/" + edition + "/VC/Auxiliary/Build"
+        if base.is_dir(candidate):
+          options["vs-path"] = candidate
+          break
       else:
-        options["vs-path"] = programFilesDir + "/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build"
+        # No VS2019 on this machine. ONLYOFFICE's third-party stack is pinned to
+        # the v142 toolset, which newer Visual Studio releases can host as a
+        # side-by-side component -- find one and pin the toolset explicitly.
+        options["vs-path"] = _find_vs_hosting_v142(programFilesDir)
 
   # check sdkjs-plugins
   if not "sdkjs-plugin" in options:

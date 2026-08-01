@@ -87,10 +87,10 @@ make_common.make()
 if config.check_option("module", "desktop"):
   config.extend_option("qmake_addon", "URL_WEBAPPS_HELP=https://download.onlyoffice.com/install/desktop/editors/help/v" + base.get_env('PRODUCT_VERSION') + "/apps")
 
-  if "windows" == base.host_platform():
-    config.extend_option("config", "updmodule")
-    base.set_env("DESKTOP_URL_UPDATES_MAIN_CHANNEL", "https://download.onlyoffice.com/install/desktop/editors/windows/onlyoffice/appcast.json")
-    base.set_env("DESKTOP_URL_UPDATES_DEV_CHANNEL", "https://download.onlyoffice.com/install/desktop/editors/windows/onlyoffice/appcastdev.json")
+  # PW Presentation deliberately does NOT enable the auto-update module.
+  # Upstream points it at ONLYOFFICE's appcast; leaving that in place would let
+  # a PW Presentation install update itself into ONLYOFFICE Desktop Editors.
+  # Releases are distributed from the project's GitHub releases page instead.
 
 # build
 build_sln.make()

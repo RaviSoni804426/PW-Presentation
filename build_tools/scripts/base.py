@@ -1241,13 +1241,23 @@ def archive_folder(src, dst):
   return cmd_exe(app, ["a", dst, src])
 
 # windows vcvarsall
+def vcvars_ver_arg():
+  """Extra vcvarsall.bat argument pinning the MSVC toolset.
+
+  ONLYOFFICE's third-party stack (boost 1.72, ICU, v8) is validated against the
+  VS2019 v142 toolset. When the build runs under a newer Visual Studio that
+  merely hosts v142 as a side-by-side component, pin it explicitly so those
+  projects still see the toolset they expect."""
+  ver = config.option("vcvars-ver")
+  return (" -vcvars_ver=" + ver) if ver else ""
+
 def _call_vcvarsall_and_return_env(arch):
   vcvarsall = config.option("vs-path") + "/vcvarsall.bat"
   interesting = set(("INCLUDE", "LIB", "LIBPATH", "PATH"))
   result = {}
 
   keys = ""
-  popen = subprocess.Popen('"%s" %s & set' % (vcvarsall, arch), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  popen = subprocess.Popen('"%s" %s%s & set' % (vcvarsall, arch, vcvars_ver_arg()), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   try:
     stdout, stderr = popen.communicate()
     popen.wait()
