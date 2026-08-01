@@ -5,34 +5,52 @@ import os
 import platform
 
 def _find_vs_hosting_v142(programFilesDir):
-  """Locate a Visual Studio install that carries the v142 (VS2019) toolset.
+  """Pick the Visual Studio install and MSVC toolset to build with.
 
-  Returns its VC/Auxiliary/Build directory and records the toolset version in
-  the 'vcvars-ver' option so base.vcvars_ver_arg() pins vcvarsall to v142.
-  Falls back to the newest install found if v142 is absent anywhere."""
+  ONLYOFFICE's third-party stack (boost 1.72, ICU, V8) is validated against the
+  VS2019 v142 toolset, so prefer that wherever it lives -- newer Visual Studio
+  releases can host it side by side. Failing that, take the *oldest* toolset
+  available, since each MSVC release tends to break more of this vintage code
+  than the last.
+
+  Returns the chosen install's VC/Auxiliary/Build directory and records the
+  toolset in the 'vcvars-ver' option, which base.vcvars_ver_arg() passes to
+  vcvarsall.bat."""
   import glob
-  roots = []
+  build_dirs = []
   for pf in {programFilesDir, base.get_env("ProgramFiles"), base.get_env("ProgramFiles(x86)")}:
     if pf:
-      roots += glob.glob(pf + "/Microsoft Visual Studio/*/*/VC/Auxiliary/Build")
-  roots = sorted(set(p.replace("\\", "/") for p in roots), reverse=True)
+      build_dirs += glob.glob(pf + "/Microsoft Visual Studio/*/*/VC/Auxiliary/Build")
 
-  fallback = ""
-  for build_dir in roots:
+  # (major, minor, build_dir) for every toolset on the machine
+  found = []
+  for build_dir in sorted(set(p.replace("\\", "/") for p in build_dirs)):
     if not base.is_dir(build_dir):
       continue
-    if not fallback:
-      fallback = build_dir
     msvc_dir = build_dir[:-len("/Auxiliary/Build")] + "/Tools/MSVC"
-    for toolset in sorted(glob.glob(msvc_dir + "/14.2*"), reverse=True):
-      if base.is_dir(toolset):
-        options["vcvars-ver"] = "14.2"
-        print("using v142 toolset from " + build_dir)
-        return build_dir
+    for toolset in glob.glob(msvc_dir + "/*"):
+      if not base.is_dir(toolset):
+        continue
+      parts = os.path.basename(toolset).split(".")
+      if len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit():
+        found.append((int(parts[0]), int(parts[1]), build_dir))
 
-  if fallback:
-    print("WARNING: v142 toolset not found; falling back to " + fallback)
-  return fallback
+  if not found:
+    print("WARNING: no MSVC toolset found under any Visual Studio install")
+    return build_dirs[0].replace("\\", "/") if build_dirs else ""
+
+  v142 = [t for t in found if (t[0], t[1]) == (14, 2)]
+  major, minor, build_dir = min(v142 or found)
+  options["vcvars-ver"] = "%d.%d" % (major, minor)
+
+  if v142:
+    print("using the v142 toolset from " + build_dir)
+  else:
+    print("WARNING: v142 toolset not installed; using v%d%d from %s"
+          % (major, minor, build_dir))
+    print("         ONLYOFFICE's third-party stack is only validated against")
+    print("         v142 -- install 'MSVC v142 build tools' if this build fails.")
+  return build_dir
 
 
 def parse():

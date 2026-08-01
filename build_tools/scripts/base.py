@@ -1257,7 +1257,11 @@ def _call_vcvarsall_and_return_env(arch):
   result = {}
 
   keys = ""
-  popen = subprocess.Popen('"%s" %s%s & set' % (vcvarsall, arch, vcvars_ver_arg()), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  # text=True: without it Popen yields bytes and the split() below raises
+  # TypeError on Python 3, so this helper never actually worked there.
+  popen = subprocess.Popen('"%s" %s%s & set' % (vcvarsall, arch, vcvars_ver_arg()),
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                           shell=True, text=True, errors="replace")
   try:
     stdout, stderr = popen.communicate()
     popen.wait()
