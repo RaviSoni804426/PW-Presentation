@@ -60,6 +60,14 @@ def make():
     platformToolset = "v140"
     if (config.option("vs-version") == "2019"):
       platformToolset = "v142"
+
+    # MSBuild needs a PlatformToolset that is actually installed; fall in line
+    # with whichever toolset config resolved to.
+    vcvars_ver = config.option("vcvars-ver")
+    if vcvars_ver:
+      major_minor = vcvars_ver.split(".")
+      if len(major_minor) >= 2 and major_minor[0] == "14" and int(major_minor[1]) >= 3:
+        platformToolset = "v143"
     need_platforms = []
     if (-1 != config.option("platform").find("win_64")):
       need_platforms.append("win_64")

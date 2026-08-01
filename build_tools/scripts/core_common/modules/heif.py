@@ -27,9 +27,20 @@ LINUX_CUSTOM_SYSROOT_TOOLCHAIN_FILE = base.get_script_dir() + "/../tools/linux/s
 OLD_ENV = dict()
 
 def get_vs_version():
+  """CMake generator name for the Visual Studio the build actually resolved to.
+
+  The generator has to name a Visual Studio release that is installed -- CMake
+  rejects 'Visual Studio 16 2019' outright when only a newer one is present --
+  so derive it from the toolset config picked, rather than assuming VS2019."""
   vs_version = "14 2015"
   if config.option("vs-version") == "2019":
     vs_version = "16 2019"
+
+  vcvars_ver = config.option("vcvars-ver")
+  if vcvars_ver:
+    major_minor = vcvars_ver.split(".")
+    if len(major_minor) >= 2 and major_minor[0] == "14" and int(major_minor[1]) >= 3:
+      vs_version = "17 2022"
   return vs_version
 
 def get_xcode_sdk(platform):

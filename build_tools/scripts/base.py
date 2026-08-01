@@ -1686,11 +1686,18 @@ def make_sln(directory, args, is_no_errors):
     programFilesDir = get_env("ProgramFiles(x86)")
   dev_path = programFilesDir + "\\Microsoft Visual Studio 14.0\\Common7\\IDE"
   if ("2019" == config.option("vs-version")):
-    dev_path = programFilesDir + "\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE"
-    if not is_dir(dev_path):
-      dev_path = programFilesDir + "\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE"
-    if not is_dir(dev_path):
-      dev_path = programFilesDir + "\\Microsoft Visual Studio\\2019\\Professional\\Common7\\IDE"
+    for edition in ("Community", "Enterprise", "Professional"):
+      candidate = programFilesDir + "\\Microsoft Visual Studio\\2019\\" + edition + "\\Common7\\IDE"
+      if is_dir(candidate):
+        dev_path = candidate
+        break
+    else:
+      # No VS2019 -- devenv lives next to the toolset config actually resolved to.
+      vs_path = config.option("vs-path")
+      if vs_path:
+        candidate = vs_path.replace("/", "\\")[:-len("\\VC\\Auxiliary\\Build")] + "\\Common7\\IDE"
+        if is_dir(candidate):
+          dev_path = candidate
 
   old_env = dict(os.environ)
   os.environ["PATH"] = dev_path + os.pathsep + os.environ["PATH"]

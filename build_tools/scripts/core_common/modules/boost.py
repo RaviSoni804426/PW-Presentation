@@ -89,6 +89,18 @@ def make():
       win_boot_arg = "vc142"
       win_vs_version = "vc142"
 
+    # boost 1.72 predates VS2022, so its msvc.jam has no entry for the 14.3x /
+    # 14.4x toolsets. When config picked one of those, let b2 auto-detect the
+    # compiler already on PATH from vcvarsall instead of naming a version it
+    # does not know, and tag the libraries the way b2 will actually name them.
+    vcvars_ver = config.option("vcvars-ver")
+    if vcvars_ver:
+      major_minor = vcvars_ver.split(".")
+      if len(major_minor) >= 2 and major_minor[0] == "14" and int(major_minor[1]) >= 3:
+        win_toolset = "msvc"
+        win_boot_arg = "vc143"
+        win_vs_version = "vc143"
+
     # add "define=_ITERATOR_DEBUG_LEVEL=0" to b2 args before install for disable _ITERATOR_DEBUG_LEVEL
     if (-1 != config.option("platform").find("win_64")) and not base.is_file("../build/win_64/lib/libboost_system-" + win_vs_version + "-mt-x64-1_72.lib"):
       base.cmd("bootstrap.bat", [win_boot_arg])
