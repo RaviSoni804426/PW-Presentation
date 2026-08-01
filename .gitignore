@@ -1,0 +1,52 @@
+# ---------------------------------------------------------------
+# PW Presentation - repository ignore rules
+#
+# NOTE: do NOT add blanket *.exe / *.dll / build/ rules here.
+# The upstream repos legitimately track:
+#   build_tools/tools/win/**   (7z.exe, curl.exe, vswhere.exe)
+#   core/Common/3dParty/libvlc/build/**  (libvlc runtime DLLs)
+#   sdkjs/build/, web-apps/build/, core/X2tConverter/build/  (build configs)
+# Ignoring those breaks a fresh clone's ability to build.
+# ---------------------------------------------------------------
+
+# Upstream git metadata, renamed from .git so the sources can live in this
+# monorepo while staying diffable against ONLYOFFICE. See UPSTREAM.md.
+.git-upstream/
+
+# Local backups taken before destructive strip steps (Phase 3)
+/_backup*/
+/pw-presentation_backup*/
+
+# Build + packaging output
+/installer-output/
+/out/
+/build_log*.txt
+/configure_log*.txt
+core/build/
+core/Bin/
+build_tools/out/
+desktop-apps/win-linux/build/
+desktop-apps/win-linux/extras/**/build/
+desktop-sdk/ChromiumBasedEditors/**/build/
+
+# Compiled objects from a local build
+*.obj
+*.ilk
+*.exp
+*.pch
+*.idb
+*.tlog
+*.lastbuildstate
+
+# Node / npm
+node_modules/
+npm-debug.log*
+
+# Editor / OS noise
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+Thumbs.db
+.DS_Store
