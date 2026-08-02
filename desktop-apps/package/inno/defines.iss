@@ -25,8 +25,11 @@
 #define APP_MUTEX_NAME                  "PWPRESENTATION"
 #define APPWND_CLASS_NAME               "PWPresentationWindowClass"
 
+; Two executables ship: iconsExe is the user-facing launcher (projicons build,
+; carries the icons and jump list) and NAME_EXE_OUT is the real Qt app it
+; starts -- projicons launches "./editors.exe" by that literal name.
 #define iconsExe                        "PWPresentation.exe"
-#define NAME_EXE_OUT                    "PWPresentation.exe"
+#define NAME_EXE_OUT                    "editors.exe"
 
 #define ASSC_APP_NAME                   "PW Presentation"
 #define ASCC_REG_PREFIX                 "PWP"

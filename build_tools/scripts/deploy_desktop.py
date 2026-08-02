@@ -184,11 +184,15 @@ def make():
           base.copy_files(base.get_env("QT_DEPLOY") + "/../lib/libqgsttools_p.so*", root_dir)
 
       if (0 == platform.find("win")):
-        base.copy_file(git_dir + "/desktop-apps/win-linux/extras/projicons/" + apps_postfix + "/projicons.exe", root_dir + "/DesktopEditors.exe")
-        if not isWindowsXP:
-          base.copy_file(git_dir + "/desktop-apps/win-linux/extras/update-daemon/" + apps_postfix + "/updatesvc.exe", root_dir + "/updatesvc.exe")
-        base.copy_file(git_dir + "/desktop-apps/win-linux/" + apps_postfix + "/DesktopEditors.exe", root_dir + "/editors.exe")
-        base.copy_file(git_dir + "/desktop-apps/win-linux/res/icons/desktopeditors.ico", root_dir + "/app.ico")
+        # PW Presentation: the user-facing launcher (projicons) ships as
+        # PWPresentation.exe; the Qt app it starts keeps the literal name
+        # editors.exe that projicons launches. The qmake TARGET was renamed
+        # to PWPresentation, hence the changed source path.
+        base.copy_file(git_dir + "/desktop-apps/win-linux/extras/projicons/" + apps_postfix + "/projicons.exe", root_dir + "/PWPresentation.exe")
+        # The update daemon is not shipped: PW Presentation has the update
+        # module disabled (see build_tools/make.py).
+        base.copy_file(git_dir + "/desktop-apps/win-linux/" + apps_postfix + "/PWPresentation.exe", root_dir + "/editors.exe")
+        base.copy_file(git_dir + "/desktop-apps/win-linux/res/icons/pwpresentation.ico", root_dir + "/app.ico")
       elif (0 == platform.find("linux")):
         base.copy_file(git_dir + "/desktop-apps/win-linux/" + apps_postfix + "/DesktopEditors", root_dir + "/DesktopEditors")
 

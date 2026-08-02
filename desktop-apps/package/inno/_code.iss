@@ -907,9 +907,11 @@ begin
     GetWindowsVersionEx(version);
     if (version.Major > 6) or ((version.Major = 6) and (version.Minor >= 1)) then begin
       Exec(ExpandConstant('{app}\{#iconsExe}'), '--create-jump-list', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ErrorCode);
+      { PW Presentation ships without the auto-update service; guard so a
+        missing updatesvc.exe is not treated as an install action. }
       if CheckCommandlineParam('/noupdates') then begin
         RegWriteDWordValue(HKEY_LOCAL_MACHINE, ExpandConstant('{#APP_REG_PATH}'), 'CheckForUpdates', 0);
-      end else
+      end else if FileExists(ExpandConstant('{app}\updatesvc.exe')) then
         Exec(ExpandConstant('{app}\updatesvc.exe'), '--install "' + ExpandConstant('{cm:UpdateService}') + '."', '', SW_HIDE, ewWaitUntilTerminated, ErrorCode);
     end;
 
