@@ -18,6 +18,23 @@ def _find_vs_hosting_v142(programFilesDir):
   vcvarsall.bat."""
   import glob
   build_dirs = []
+
+  # vswhere reports every install including ones outside the default location,
+  # which a plain glob over Program Files would miss.
+  vswhere = os.path.abspath(base.get_script_dir(__file__) + "/../tools/win/vswhere/vswhere.exe")
+  if os.path.isfile(vswhere):
+    try:
+      import subprocess
+      out = subprocess.run([vswhere, "-products", "*", "-all", "-nologo",
+                            "-format", "value", "-property", "installationPath"],
+                           capture_output=True, text=True, errors="replace").stdout
+      for line in out.splitlines():
+        line = line.strip()
+        if line:
+          build_dirs.append(line + "/VC/Auxiliary/Build")
+    except Exception as e:
+      print("vswhere lookup failed (" + str(e) + "); falling back to a directory scan")
+
   for pf in {programFilesDir, base.get_env("ProgramFiles"), base.get_env("ProgramFiles(x86)")}:
     if pf:
       build_dirs += glob.glob(pf + "/Microsoft Visual Studio/*/*/VC/Auxiliary/Build")
@@ -39,18 +56,36 @@ def _find_vs_hosting_v142(programFilesDir):
     print("WARNING: no MSVC toolset found under any Visual Studio install")
     return build_dirs[0].replace("\\", "/") if build_dirs else ""
 
-  v142 = [t for t in found if (t[0], t[1]) == (14, 2)]
+  v142 = [t for t in found if msvc_family(t[0], t[1]) == "v142"]
   major, minor, build_dir = min(v142 or found)
+  # vcvarsall takes the toolset directory version verbatim, e.g. 14.29
   options["vcvars-ver"] = "%d.%d" % (major, minor)
+  options["msvc-family"] = msvc_family(major, minor)
 
   if v142:
-    print("using the v142 toolset from " + build_dir)
+    print("using the v142 toolset (%d.%d) from %s" % (major, minor, build_dir))
   else:
-    print("WARNING: v142 toolset not installed; using v%d%d from %s"
-          % (major, minor, build_dir))
+    print("WARNING: v142 toolset not installed; using %s (%d.%d) from %s"
+          % (options["msvc-family"], major, minor, build_dir))
     print("         ONLYOFFICE's third-party stack is only validated against")
     print("         v142 -- install 'MSVC v142 build tools' if this build fails.")
   return build_dir
+
+
+def msvc_family(major, minor):
+  """Map an MSVC toolset directory version onto its platform-toolset name.
+
+  The directory carries the compiler version (14.16, 14.29, 14.44); the name
+  MSBuild, CMake and boost use is coarser -- one per Visual Studio release."""
+  if major != 14:
+    return "v%d0" % major
+  if minor < 10:
+    return "v140"   # VS2015
+  if minor < 20:
+    return "v141"   # VS2017
+  if minor < 30:
+    return "v142"   # VS2019
+  return "v143"     # VS2022 and newer
 
 
 def parse():

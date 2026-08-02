@@ -36,11 +36,12 @@ def get_vs_version():
   if config.option("vs-version") == "2019":
     vs_version = "16 2019"
 
-  vcvars_ver = config.option("vcvars-ver")
-  if vcvars_ver:
-    major_minor = vcvars_ver.split(".")
-    if len(major_minor) >= 2 and major_minor[0] == "14" and int(major_minor[1]) >= 3:
-      vs_version = "17 2022"
+  vs_version = {
+    "v140": "14 2015",
+    "v141": "15 2017",
+    "v142": "16 2019",
+    "v143": "17 2022",
+  }.get(config.option("msvc-family"), vs_version)
   return vs_version
 
 def get_xcode_sdk(platform):
