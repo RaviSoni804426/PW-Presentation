@@ -783,6 +783,24 @@ def qt_setup(platform):
   compiler_platform = compiler["compiler"] if platform_is_32(platform) else compiler["compiler_64"]
   qt_dir = qt_dir + "/" + compiler_platform
 
+  # A Qt kit is named after the MSVC that built Qt, not the toolset we compile
+  # with, so e.g. vs-version 2019 looks for msvc2019_64 while the installed Qt
+  # only ships msvc2022_64. Those runtimes are binary compatible, so fall back
+  # to whichever msvc kit of the right bitness is actually present.
+  if (0 == platform.find("win")) and not is_dir(qt_dir):
+    want_64 = not platform_is_32(platform)
+    candidates = []
+    for kit in glob.glob(config.option("qt-dir") + "/msvc*"):
+      if not is_dir(kit + "/bin"):
+        continue
+      name = os.path.basename(kit)
+      if name.endswith("_64") == want_64 and ("arm" in name) == ("arm" in platform):
+        candidates.append(name)
+    if candidates:
+      chosen = sorted(candidates)[-1]
+      print("Qt kit " + compiler_platform + " not installed; using " + chosen)
+      qt_dir = config.option("qt-dir") + "/" + chosen
+
   if (0 == platform.find("linux_arm")) and not is_dir(qt_dir):
     if ("gcc_arm64" == compiler_platform):
       qt_dir = config.option("qt-dir") + "/gcc_64"
