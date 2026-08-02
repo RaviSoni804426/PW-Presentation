@@ -99,7 +99,7 @@ OutputBaseFileName                ={#OUTPUT_FILE}
 SignTool                  =byparam $p
 #endif
 
-SetupIconFile={#BRANDING_DIR}\..\..\win-linux\extras\projicons\res\icons\desktopeditors.ico
+SetupIconFile={#BRANDING_DIR}\..\..\win-linux\extras\projicons\res\icons\pwpresentation.ico
 WizardStyle=classic dynamic
 WizardSizePercent=100
 WizardImageFile={#BRANDING_DIR}\res\WizImage-Light-*.png
@@ -127,7 +127,7 @@ Name: en; MessagesFile: compiler:Default.isl;
 Name: bg; MessagesFile: compiler:Languages\Bulgarian.isl;
 Name: ca; MessagesFile: compiler:Languages\Catalan.isl;
 Name: cs; MessagesFile: compiler:Languages\Czech.isl;
-Name: el; MessagesFile: compiler:Languages\Greek.isl;
+Name: el; MessagesFile: compiler:Default.isl;
 ;Name: et; MessagesFile: compiler:Languages\Estonian.isl;
 Name: fi; MessagesFile: compiler:Languages\Finnish.isl;
 ;Name: lt; MessagesFile: compiler:Languages\Lithuanian.isl;
@@ -138,45 +138,45 @@ Name: fr; MessagesFile: compiler:Languages\French.isl;
 Name: es; MessagesFile: compiler:Languages\Spanish.isl;
 Name: pt_BR; MessagesFile: compiler:Languages\BrazilianPortuguese.isl;
 Name: pt_PT; MessagesFile: compiler:Languages\Portuguese.isl;
-Name: id; MessagesFile: compiler:Languages\Indonesian.isl;
+Name: id; MessagesFile: compiler:Default.isl;
 Name: it_IT; MessagesFile: compiler:Languages\Italian.isl;
 Name: pl; MessagesFile: compiler:Languages\Polish.isl;
-Name: ro; MessagesFile: compiler:Languages\Romanian.isl;
+Name: ro; MessagesFile: compiler:Default.isl;
 Name: sk; MessagesFile: compiler:Languages\Slovak.isl;
 Name: sl; MessagesFile: compiler:Languages\Slovenian.isl;
 Name: sv; MessagesFile: compiler:Languages\Swedish.isl;
 Name: tr; MessagesFile: compiler:Languages\Turkish.isl;
 #if Int(DecodeVer(PREPROCVER,1)) < 6
-Name: vi; MessagesFile: compiler:Languages\Vietnamese.islu;
-Name: hy_AM; MessagesFile: compiler:Languages\Armenian.islu;
+Name: vi; MessagesFile: compiler:Default.isl;
+Name: hy_AM; MessagesFile: compiler:Default.isl;
 #else
-Name: vi; MessagesFile: compiler:Languages\Vietnamese.isl;
+Name: vi; MessagesFile: compiler:Default.isl;
 Name: hy_AM; MessagesFile: compiler:Languages\Armenian.isl;
 #endif
-Name: zh_CN; MessagesFile: compiler:Languages\ChineseSimplified.isl;
+Name: zh_CN; MessagesFile: compiler:Default.isl;
 ;Name: hy_AM; MessagesFile: compiler:Languages\Armenian.islu;
-Name: hr; MessagesFile: compiler:Languages\Croatian.isl;
+Name: hr; MessagesFile: compiler:Default.isl;
 Name: da; MessagesFile: compiler:Languages\Danish.isl;
 ;Name: hi; MessagesFile: compiler:Languages\Hindi.islu;
 Name: hu; MessagesFile: compiler:Languages\Hungarian.isl;
 ;Name: ga_IE; MessagesFile: compiler:Default.isl;
 Name: ja; MessagesFile: compiler:Languages\Japanese.isl;
 Name: ko; MessagesFile: compiler:Languages\Korean.isl;
-Name: lv; MessagesFile: compiler:Languages\Latvian.isl;
+Name: lv; MessagesFile: compiler:Default.isl;
 Name: no; MessagesFile: compiler:Languages\Norwegian.isl;
 Name: uk; MessagesFile: compiler:Languages\Ukrainian.isl;
-Name: be; MessagesFile: compiler:Languages\Belarusian.isl;
-Name: gl; MessagesFile: compiler:Languages\Galician.isl;
-Name: si; MessagesFile: compiler:Languages\Sinhala.islu;
-Name: zh_TW; MessagesFile: compiler:Languages\ChineseTraditional.isl;
+Name: be; MessagesFile: compiler:Default.isl;
+Name: gl; MessagesFile: compiler:Default.isl;
+Name: si; MessagesFile: compiler:Default.isl;
+Name: zh_TW; MessagesFile: compiler:Default.isl;
 Name: ar_SA; MessagesFile: compiler:Languages\Arabic.isl;
-Name: sr_Latn_RS; MessagesFile: compiler:Languages\SerbianLatin.isl;
-Name: sr_Cyrl_RS; MessagesFile: compiler:Languages\SerbianCyrillic.isl;
-Name: en_GB; MessagesFile: compiler:Languages\EnglishBritish.isl;
+Name: sr_Latn_RS; MessagesFile: compiler:Default.isl;
+Name: sr_Cyrl_RS; MessagesFile: compiler:Default.isl;
+Name: en_GB; MessagesFile: compiler:Default.isl;
 Name: he; MessagesFile: compiler:Languages\Hebrew.isl;
-Name: sq; MessagesFile: compiler:Languages\Albanian.isl;
+Name: sq; MessagesFile: compiler:Default.isl;
 #if Ver >= EncodeVer(6,1,1)
-Name: ur; MessagesFile: compiler:Languages\Urdu.isl;
+Name: ur; MessagesFile: compiler:Default.isl;
 #endif
 
 [LangOptions]

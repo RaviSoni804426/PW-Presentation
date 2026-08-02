@@ -403,7 +403,7 @@ begin
     dir := 'default';
   end;
 
-  ; PW Presentation registers only the presentation ShellNew entry.
+  // PW Presentation registers only the presentation ShellNew entry.
   args := ['new.pptx:.pptx:.Show.12:9:1002:1102'];
 
   GetWindowsVersionEx(version);
