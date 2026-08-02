@@ -31,11 +31,15 @@ base.check_module_version("1", clear_module)
 
 # fetch harfbuzz
 if not base.is_dir("harfbuzz"):
-  base.cmd("git", ["clone", "https://github.com/harfbuzz/harfbuzz.git"])
+  base.cmd("git", ["clone", "--progress", "https://github.com/harfbuzz/harfbuzz.git"])
   os.chdir("harfbuzz")
   base.cmd("git", ["checkout", "894a1f72ee93a1fd8dc1d9218cb3fd8f048be29a"])
   os.chdir("../")
 
+# The patch and the generated .pri travel together: both exist or neither.
+# Keying them on the .pri (rather than nesting under the clone) lets a
+# manually restored checkout resume here.
+if not base.is_file("./harfbuzz.pri"):
   apply_patch("./harfbuzz/src/hb-ft.cc", "./patch/hb-ft.cc.patch")
 
   qmake_content_lines = []
