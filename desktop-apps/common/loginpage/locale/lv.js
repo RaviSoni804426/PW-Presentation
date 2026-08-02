@@ -1,6 +1,6 @@
 l10n.lv = {
-    welWelcome: 'Esiet sveicināti ONLYOFFICE Darbvirsmas Redaktoros!',
-    welDescr: 'Strādājiet ar dokumentiem bezsaistē vai pieslēdziet komplektu savam mākonim: ONLYOFFICE, ownCloud, Nextcloud',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Vai nepieciešama palīdzība? Apmeklējiet mūsu $1.',
     textHelpCenter: 'Palīdzības centrā',
     btnConnect: 'Savienoties tūlīt',

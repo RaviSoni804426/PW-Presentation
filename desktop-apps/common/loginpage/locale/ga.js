@@ -1,6 +1,6 @@
 l10n.ga = {
-    welWelcome: 'Fáilte chuig ONLYOFFICE Eagarthóirí Deisce!',
-    welDescr: 'Oibrigh ar dhoiciméid as líne nó ceangail an tsraith le do scamall: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'An bhfuil cabhair uait? Tabhair cuairt ar ár $1.',
     textHelpCenter: 'Lárionad Cabhrach',
     btnConnect: 'Déan teagmháil anois',

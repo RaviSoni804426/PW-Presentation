@@ -1,6 +1,6 @@
 l10n.el = {
-    welWelcome: 'Καλώς ήλθατε στο ONLYOFFICE Desktop Editors!',
-    welDescr: 'Εργαστείτε εκτός σύνδεσης με έγγραφα ή συνδέστε τη σουίτα στο cloud σας: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Χρειάζεστε βοήθεια; Επισκεφτείτε το $1 μας.',
     textHelpCenter: 'Κέντρο Βοήθειας',
     btnConnect: 'Σύνδεση τώρα',

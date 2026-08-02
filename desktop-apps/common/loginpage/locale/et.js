@@ -1,6 +1,6 @@
 l10n.et = {
-    welWelcome: 'Tere tulemast ONLYOFFICE Töölaua Redigeerijad!',
-    welDescr: 'Tööta oma dokumentide kallal võrgust väljas või ühenda omale sobiliku pilvega: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Vajad abi? Külasta meie $1.',
     textHelpCenter: 'Abikeskus',
     btnConnect: 'Ühenda nüüd',

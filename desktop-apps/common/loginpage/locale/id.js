@@ -1,6 +1,6 @@
 l10n.id = {
-    welWelcome: 'Selamat Datang di ONLYOFFICE Desktop Editors!',
-    welDescr: 'Mengerjakan dokumen secara luring atau menghubungkannya ke cloud Anda: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Butuh bantuan? Kunjungi $1 kami.',
     textHelpCenter: 'Pusat Bantuan',
     btnConnect: 'Hubungkan sekarang',

@@ -1,6 +1,6 @@
 l10n.ur = {
-    welWelcome: 'ONLYOFFICE ڈیسک ٹاپ ایڈیٹرز میں خوش آمدید!',
-    welDescr: 'دستاویزات پر آف لائن کام کریں یا سویٹ کو اپنے کلاؤڈ سے جوڑیں: ONLYOFFICE، ownCloud، Nextcloud',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'مدد کی ضرورت ہے؟ ہمارے $1 پر جائیں۔',
     textHelpCenter: 'امدادی مرکز',
     btnConnect: 'ابھی جڑیں',

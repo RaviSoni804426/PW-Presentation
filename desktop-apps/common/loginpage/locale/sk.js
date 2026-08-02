@@ -1,6 +1,6 @@
 l10n.sk = {
-    welWelcome: 'Vitajte v ONLYOFFICE Desktop Editors!',
-    welDescr: 'Pracujte s dokumentmi offline alebo pripojte balík k vášmu cloudu: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Potrebujete pomoc? Navštívte naše $1.',
     textHelpCenter: 'Centrum pomoci',
     btnConnect: 'Pripojiť sa',

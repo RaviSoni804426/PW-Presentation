@@ -1,6 +1,6 @@
 l10n.fi = {
-    welWelcome: 'Tervetuloa ONLYOFFICE Työpöytä Editoriin!',
-    welDescr: 'Työskentele ilman verkkoyhteyttä tai yhdistä pilveesi: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Tarvitsetko apua? Käy osoitteessa $1.',
     textHelpCenter: 'Ohjekeskus',
     btnConnect: 'Yhdistä nyt',

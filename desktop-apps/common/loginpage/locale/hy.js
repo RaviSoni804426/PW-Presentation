@@ -1,6 +1,6 @@
 l10n.hy = {
-    welWelcome: 'Բարի գալուստ ONLYOFFICE աշխատանքային սեղանի խմբագրիչներ',
-    welDescr: 'Աշխատեք փաստաթղթերի վրա օֆֆլայն կամ միացրեք Ձեր փաթեթը Ձեր ամպին՝ ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Օգնություն է պե՞տք։ Այցելեք մեր $1.',
     textHelpCenter: 'Օգնության կենտրոն',
     btnConnect: 'Միանալ հիմա',

@@ -1,6 +1,6 @@
 l10n.ru = {
-    welWelcome: 'Добро пожаловать в ONLYOFFICE!',
-    welDescr: 'Работайте с документами офлайн или подключитесь к облаку: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Требуется помощь? Обратитесь в наш $1.',
     textHelpCenter: 'Справочный центр',
     btnConnect: 'Подключить',

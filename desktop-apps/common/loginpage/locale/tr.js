@@ -1,6 +1,6 @@
 l10n.tr = {
-    welWelcome: 'ONLYOFFICE Masaüstü Editörlerine Hoşgeldiniz!',
-    welDescr: 'Belgeler üzerinde çevrimdışı çalışın veya suiti bulutunuza bağlayın: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Yardıma mı ihtiyacınız var? $1 ziyaret edin.',
     textHelpCenter: 'Yardım Merkezi',
     btnConnect: 'Hemen bağlan',

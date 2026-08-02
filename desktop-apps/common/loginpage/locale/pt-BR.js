@@ -1,6 +1,6 @@
 l10n.pt_BR = {
-    welWelcome: 'Bem-vindo ao ONLYOFFICE Desktop Editors!',
-    welDescr: 'Trabalhe em documentos offline ou conecte-se à sua nuvem: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Precisa de ajuda? Visite nossa $1.',
     textHelpCenter: 'Central de Ajuda',
     btnConnect: 'Conectar',

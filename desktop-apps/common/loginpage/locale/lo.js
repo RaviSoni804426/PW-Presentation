@@ -1,6 +1,6 @@
 l10n.lo = {
-    welWelcome: 'ຍິນດີຕ້ອນຮັບເຂົ້າສູ່ ONLYOFFICE!',
-    welDescr: 'ໃຊ້ໄດ້ໂດຍບໍ່ມີເນັດ ຫຼືເຊື່ອມຕໍ່ເຂົ້າຄຣາວຂອງ: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'ຕ້ອງການຄວາມຊ່ວຍເຫຼືອບໍ? ເຂົ້າເບິ່ງ $1 ຂອງພວກເຮົາ.',
     textHelpCenter: 'ສູນຊ່ວຍເຫຼືອ',
     btnConnect: 'ເຊື່ອມຕໍ່ເລີຍ',

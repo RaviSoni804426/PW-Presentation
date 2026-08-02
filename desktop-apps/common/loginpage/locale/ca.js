@@ -1,6 +1,6 @@
 l10n.ca = {
-    welWelcome: 'Benvingut/da a ONLYOFFICE Desktop Editors!',
-    welDescr: 'Treballa sense connexió als teus documents o connecta la suite al teu núvol: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Necessites ajuda? Visita el nostre $1.',
     textHelpCenter: 'Centre d\'Ajuda',
     btnConnect: 'Connecta ara',

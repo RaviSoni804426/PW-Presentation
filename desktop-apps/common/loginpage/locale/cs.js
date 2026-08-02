@@ -1,6 +1,6 @@
 l10n.cs = {
-    welWelcome: 'Vítejte v ONLYOFFICE Desktop Editors!',
-    welDescr: 'Práce na dokumentech offline nebo propojení sady do cloudu: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Potřebujete pomoct? Navštivte naše $1.',
     textHelpCenter: 'Centrum nápovědy',
     btnConnect: 'Připojit',

@@ -1,6 +1,6 @@
 l10n.ja = {
-    welWelcome: 'ONLYOFFICE デスクトップ エディターにようこそ!',
-    welDescr: 'ドキュメントをオフラインで使用するか、お使いのクラウドへスイートを接続: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'ご不明な点がございましたら、 $1 をご覧ください',
     textHelpCenter: 'ヘルプセンター',
     btnConnect: '今すぐ接続',

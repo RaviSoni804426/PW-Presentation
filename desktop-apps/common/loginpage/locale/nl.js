@@ -1,6 +1,6 @@
 ﻿l10n.nl = {
-    welWelcome: 'Welkom bij ONLYOFFICE Desktop Editors!',
-    welDescr: 'Werk offline aan documenten of sluit de suite aan op uw cloud: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Hulp nodig? Bezoek ons $1.',
     textHelpCenter: 'Helpcentrum',
     btnConnect: 'Nu verbinden',

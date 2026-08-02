@@ -1,6 +1,6 @@
 l10n.he = {
-    welWelcome: 'ברוכים הבאים לעורכי שולחן העבודה של ONLYOFFICE!',
-    welDescr: 'לעבוד על מסמכים במצב לא מקוון או לחבר את החבילה לענן שלך: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'צריך עזרה? בקר באתר שלנו ב-$1',
     textHelpCenter: 'מרכז עזרה',
     btnConnect: 'התחבר עכשיו',

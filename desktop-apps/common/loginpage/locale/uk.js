@@ -1,6 +1,6 @@
 l10n.uk = {
-    welWelcome: 'Ласкаво просимо до десктопних редакторів ONLYOFFICE!',
-    welDescr: 'Працюйте над документами в автономному режимі чи підключіть програмний комплекс до хмари ONLYOFFICE, ownCloud або Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Потрібна допомога? Відвідайте наш $1.',
     textHelpCenter: 'Центр допомоги',
     btnConnect: 'Під\'єднати зараз',

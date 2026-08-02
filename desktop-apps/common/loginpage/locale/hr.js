@@ -1,6 +1,6 @@
 l10n.hr = {
-    welWelcome: 'Dobrodošli u ONLYOFFICE uređivače radne površine!',
-    welDescr: 'Radite na dokumentima izvanmrežno ili povežite paket na svoj oblak: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Trebate pomoć? Posjetite naš $1.',
     textHelpCenter: 'Centar za pomoć',
     btnConnect: 'Povežite sada',

@@ -1,6 +1,6 @@
 l10n.be = {
-    welWelcome: 'Вітаем у ONLYOFFICE Desktop Editors!',
-    welDescr: 'Працуйце з дакументамі ў аўтаномным рэжыме або падлучыцеся да воблака: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Патрэбна дапамога? Наведайце наш $1.',
     textHelpCenter: 'Цэнтр дапамогі',
     btnConnect: 'Падлучыць',

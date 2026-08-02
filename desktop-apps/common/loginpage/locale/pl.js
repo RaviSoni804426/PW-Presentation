@@ -1,6 +1,6 @@
 l10n.pl = {
-    welWelcome: 'Witaj w ONLYOFFICE Desktop Editiors!',
-    welDescr: 'Pracuj nad dokumentami offline lub połącz pakiet ze swoją chmurą: ONLYOFFICE, ownCloud, Nextcloud.',
+    welWelcome: 'Welcome to PW Presentation!',
+    welDescr: 'Work on presentations offline, or connect to your cloud: ONLYOFFICE, ownCloud, Nextcloud.',
     welNeedHelp: 'Potrzebujesz pomocy? Odwiedź naszą $1.',
     textHelpCenter: 'Centrum pomocy',
     btnConnect: 'Połącz teraz',
