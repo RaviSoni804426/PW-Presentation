@@ -56,10 +56,17 @@ sources.
 
 ### Prerequisites
 
-- Visual Studio with the C++ workload
-- Qt (the build auto-detects the kit under `--qt-dir`)
+- **Visual Studio 2019 Build Tools (MSVC v142)** — boost 1.72, ICU and V8 8.9
+  are pinned to it; V8 in particular predates VS2022 entirely
+- **A VS2022+ toolset (v143)** — Qt 6.11 rejects anything below MSVC 19.30.
+  The build resolves both: v142 for the third-party stack, v143 for the
+  ONLYOFFICE sources and the Qt shell. They are binary compatible.
+- Qt 6.11 (any `msvc*_64` kit; the build falls back to whichever is installed)
 - Node.js, Python 3, Java
-- Inno Setup 6+ (for the installer)
+- **Inno Setup 6** for the installer — the packaging script does not compile
+  under Inno Setup 7
+- ~60 GB free disk. `core/build`, `build_tools/out` and the V8 checkout can be
+  junctioned onto another volume.
 
 ### JavaScript / UI only
 
@@ -87,9 +94,27 @@ cd build_tools && python configure.py --update 0 --platform win_64 --module desk
 cd build_tools && python make.py
 ```
 
-Note that `make.py` builds the entire third-party stack from source, including
-V8 via Chromium's `depot_tools`. Budget several hours and tens of gigabytes of
-free disk.
+`make.py` builds the entire third-party stack from source, including V8 via
+Chromium's `depot_tools`. Budget several hours. Output lands in
+`build_tools/out/win_64/onlyoffice/DesktopEditors/`.
+
+### Installer
+
+```bash
+cd desktop-apps/package && pwsh ./make_inno.ps1 -Version 1.0.0.1 -Arch x64 -CompanyName PW -ProductName PWPresentation
+```
+
+Stage the deploy directory as `desktop-apps/package/build/x64/desktop` first
+(a directory junction works), and set `INNOPATH` to the Inno Setup 6 install.
+
+### Shipped executables
+
+Two, mirroring upstream's layout:
+
+| File | Role |
+|---|---|
+| `PWPresentation.exe` | launcher — Explorer file icons, jump list; starts `editors.exe` |
+| `editors.exe` | the Qt application |
 
 ## Differences from upstream ONLYOFFICE
 
