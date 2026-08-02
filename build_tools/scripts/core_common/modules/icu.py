@@ -105,7 +105,9 @@ def make():
       platform_args = args[platform]
 
       compile_bat.append("call \"" + config.option("vs-path") + "/vcvarsall.bat\" " + platform_args['vcvarsall_arch'])
-      compile_bat.append("call MSBuild.exe " + source_dir + "/source/allinone/allinone.sln /p:Configuration=Release /p:PlatformToolset=" + platformToolset + " /p:Platform=" + platform_args['msbuild_platfrom'])
+      # SkipUWP: the solution carries *_uwp.vcxproj variants that need the UWP
+      # flavour of the toolset; the desktop build neither has nor needs it.
+      compile_bat.append("call MSBuild.exe " + source_dir + "/source/allinone/allinone.sln /p:Configuration=Release /p:PlatformToolset=" + platformToolset + " /p:Platform=" + platform_args['msbuild_platfrom'] + " /p:SkipUWP=true")
       compile_bat.append("endlocal")
       base.run_as_bat(compile_bat)
 
