@@ -225,6 +225,15 @@ def make():
   if ("windows" == base.host_platform()):
     base.set_env("DEPOT_TOOLS_WIN_TOOLCHAIN", "0")
     base.set_env("GYP_MSVS_VERSION", config.option("vs-version"))
+    # Chromium's vs_toolchain.py only probes the default Program Files layout.
+    # Point it at the resolved install explicitly so a Visual Studio living
+    # elsewhere (e.g. C:\BuildTools2019) is found. vs2019_install is the
+    # documented override; GYP_MSVS_OVERRIDE_PATH covers older scripts.
+    vs_path = config.option("vs-path")
+    if vs_path.endswith("/VC/Auxiliary/Build"):
+      vs_root = vs_path[:-len("/VC/Auxiliary/Build")].replace("/", "\\")
+      base.set_env("vs" + config.option("vs-version") + "_install", vs_root)
+      base.set_env("GYP_MSVS_OVERRIDE_PATH", vs_root)
 
   if not base.is_dir("v8"):
     base.cmd("./depot_tools/fetch", ["v8"], True)
