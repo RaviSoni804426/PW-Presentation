@@ -49,10 +49,10 @@
 # define VER_STR_LONG(mj,mn,b,r)     VER_STRINGIFY(mj) "." VER_STRINGIFY(mn) "." VER_STRINGIFY(b) "." VER_STRINGIFY(r) "\0"
 # define VER_STR_SHORT(mj,mn)        VER_STRINGIFY(mj) "." VER_STRINGIFY(mn) "\0"
 
-# define VER_NUM_MAJOR               5
-# define VER_NUM_MINOR               2
-# define VER_NUM_BUILD               46
-# define VER_NUM_REVISION            24
+# define VER_NUM_MAJOR               1
+# define VER_NUM_MINOR               0
+# define VER_NUM_BUILD               0
+# define VER_NUM_REVISION            1
 # define VER_NUMBER                  VER_NUM_MAJOR,VER_NUM_MINOR,VER_NUM_BUILD,VER_NUM_REVISION
 # define VER_STRING                  VER_STR_LONG(VER_NUM_MAJOR,VER_NUM_MINOR,VER_NUM_BUILD,VER_NUM_REVISION)
 # define VER_STRING_SHORT            VER_STR_SHORT(VER_NUM_MAJOR,VER_NUM_MINOR)
@@ -68,16 +68,19 @@
 #define VER_LANG_ID                 0x0409
 #define VER_CHARSET_ID              1252
 
-#define VER_FILEDESCRIPTION_STR     "ONLYOFFICE Editors\0"
-#define VER_PRODUCTNAME_STR         "ONLYOFFICE Editors\0"
-#define VER_COMPANYNAME_STR         "Ascensio System SIA\0"
-#define VER_LEGALCOPYRIGHT_STR      "© Ascensio System SIA " TO_STR(COPYRIGHT_YEAR) ". All rights reserved.\0"
-#define VER_COMPANYDOMAIN_STR       "www.onlyoffice.com\0"
+/* This executable is the user-facing launcher: it carries the Explorer file
+ * icons and the jump list, and starts editors.exe. Its properties are what
+ * Windows shows for PW Presentation, so they mirror the Qt app's. */
+#define VER_FILEDESCRIPTION_STR     "PW Presentation\0"
+#define VER_PRODUCTNAME_STR         "PW Presentation\0"
+#define VER_COMPANYNAME_STR         "PW Presentation\0"
+#define VER_LEGALCOPYRIGHT_STR      "Based on ONLYOFFICE © Ascensio System SIA " TO_STR(COPYRIGHT_YEAR) ". Licensed under GNU AGPL v3.\0"
+#define VER_COMPANYDOMAIN_STR       "github.com/RaviSoni804426/PW-Presentation\0"
 
-#define VER_INTERNALNAME_STR        "AppIcons\0"
+#define VER_INTERNALNAME_STR        "PWPresentation\0"
 #define VER_LEGALTRADEMARKS1_STR    "All rights reserved\0"
 #define VER_LEGALTRADEMARKS2_STR    VER_LEGALTRADEMARKS1_STR
-#define VER_ORIGINALFILENAME_STR    "projicons.exe\0"
+#define VER_ORIGINALFILENAME_STR    "PWPresentation.exe\0"
 
 #ifdef APP_USE_PRIVATE_ASSETS
 # include "src/version_p.h"
