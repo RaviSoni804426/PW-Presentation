@@ -235,6 +235,15 @@ def make():
       base.set_env("vs" + config.option("vs-version") + "_install", vs_root)
       base.set_env("GYP_MSVS_OVERRIDE_PATH", vs_root)
 
+    # Newer Windows SDK Debuggers no longer ship the api-ms-win-* downlevel
+    # stubs that vs_toolchain insists on copying next to test binaries; they
+    # are present in System32 on Win10+ anyway. Mark them optional.
+    vs_toolchain_py = base_dir + "/v8/build/vs_toolchain.py"
+    if base.is_file(vs_toolchain_py):
+      base.replaceInFile(vs_toolchain_py,
+        "debug_files.extend([('api-ms-win-downlevel-kernel32-l2-1-0.dll', False),\n                        ('api-ms-win-eventing-provider-l1-1-0.dll', False)])",
+        "debug_files.extend([('api-ms-win-downlevel-kernel32-l2-1-0.dll', True),\n                        ('api-ms-win-eventing-provider-l1-1-0.dll', True)])")
+
   if not base.is_dir("v8"):
     base.cmd("./depot_tools/fetch", ["v8"], True)
     base.copy_dir("./v8/third_party", "./v8/third_party_new")
