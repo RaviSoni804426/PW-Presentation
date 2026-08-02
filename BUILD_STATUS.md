@@ -1,8 +1,6 @@
 # Build status
 
-## What builds today
-
-The entire JavaScript/UI layer builds and has been verified presentation-only.
+## JavaScript / UI layer — built and verified
 
 ```bash
 cd build_tools
@@ -15,71 +13,43 @@ python make.py
 
 Output: `build_tools/out/js/onlyoffice/desktop/` — 218 MB.
 
-Verified in that output:
-
 | Check | Result |
 |---|---|
-| sdkjs bundles shipped | `slide/sdk-all.js` (29 MB) and `slide/sdk-all-min.js` only — no word, cell or visio bundle |
-| Editor UIs shipped | `presentationeditor`, plus shared `common` and `api` |
-| Start-screen creation tiles | PPTX only; no DOCX, XLSX or PDF tile |
-| Word text engine present in slide bundle | yes — 2178 references, confirming it cannot be deleted |
-| Cell workbook model present in slide bundle | yes — 233 references |
+| sdkjs bundles shipped | `slide/` only — no word, cell or visio bundle |
+| Editor UIs shipped | `presentationeditor` + shared `common`/`api` |
+| Start-screen creation tiles | PPTX only |
+| Page title | "PW Presentation" (was "Hello ONLYOFFICE Documents") |
+| Word text engine in slide bundle | 2178 refs — confirms `sdkjs/word` cannot be deleted |
 
-## What does not build yet: the C++ layer
+## C++ layer — building
 
-The native side (`core`, `desktop-sdk`, the Qt shell) has not been built. The
-blocker is the toolchain, not the PW Presentation changes.
+Toolchain that finally worked, and what stood in the way:
 
-### Requirement: Visual Studio 2019
-
-ONLYOFFICE v9.4's `build_tools` only ever sets `vs-version` to `2015` or
-`2019` (`scripts/config.py`), and every third-party module keys off that value:
-
-| Module | Pinned to |
+| Component | State |
 |---|---|
-| `boost.py` | boost 1.72 with toolset `msvc-14.2`, bootstrap `vc142` |
-| `icu.py` | MSBuild `PlatformToolset=v142` |
-| `heif.py` | CMake generator `Visual Studio 16 2019` |
-| `v8_89.py` | `GYP_MSVS_VERSION` = `vs-version`; V8 8.9 dates from early 2021 and predates VS2022 entirely |
+| **VS 2019 Build Tools** at `C:\BuildTools2019` (v142 / 14.29.30133) | installed via `vs_BuildTools.exe --quiet --installPath C:\BuildTools2019` |
+| `config.py` toolset resolution | discovers installs via vswhere, prefers v142, maps compiler version → platform toolset (`14.29`→`v142`); pins vcvarsall with `-vcvars_ver` |
+| `base._call_vcvarsall_and_return_env` | fixed: split bytes as str on Python 3, never worked |
+| `NoDefaultCurrentDirectoryInExePath=1` in harness env | cleared by the build wrapper; cmd.exe otherwise refuses `bootstrap.bat` etc. from the CWD |
+| boost 1.72 | **builds** — vc142 static libs; runs inside an explicit vcvarsall env because its own VS probe misses non-standard install paths |
+| CEF 5414 | prebuilt download, extracted |
+| ICU | building under MSBuild `PlatformToolset=v142` |
+| openssl, v8, core, Qt apps | pending; v8 gets `vs2019_install`/`GYP_MSVS_OVERRIDE_PATH` pointed at the resolved VS |
+| Windows SDK | 10.0.19041 + 10.0.26100, Debuggers present (v8 requirement) |
 
-This repository carries patches that make the first three adapt to whichever
-MSVC toolset is actually installed (see the Phase 5 commits). **V8 remains
-pinned**: it is fetched with Chromium's `depot_tools` and built with GN/ninja,
-and its own build scripts decide which Visual Studio to use.
+Disk: `core/build`, `build_tools/out`, `3dParty/v8_89`, `3dParty/cef` are
+junctioned into `C:\pwbuild` (D: lacks the headroom for a Chromium checkout).
 
-The practical fix is to install **Visual Studio 2019 Build Tools**, or add the
-**MSVC v142** individual component to a newer Visual Studio — with v142 present
-the patched `config.py` finds and pins it automatically, and every module above
-falls back into its validated configuration.
+## Packaging layout (Phase 6, ready)
 
-On the machine this was developed on, adding v142 non-interactively failed:
-`setup.exe modify --quiet` exits 5007 ("commands with --quiet should be run
-elevated from the beginning"), and the self-elevating bootstrapper left the
-component uninstalled. Adding it through the Visual Studio Installer UI is the
-reliable route.
+Two executables ship, mirroring upstream:
 
-### Also budget for
+- `PWPresentation.exe` — the projicons launcher: Explorer icons, jump list;
+  starts `./editors.exe` by literal name
+- `editors.exe` — the Qt app (qmake TARGET `PWPresentation`, renamed at deploy)
 
-- **Disk**: V8's `fetch` + `gclient sync` alone pulls a Chromium-sized
-  checkout; CEF adds a further download. Tens of gigabytes, well beyond the
-  ~31 GB free on `D:` when this was written. `core/build` and `build_tools/out`
-  are already junctioned to `C:\pwbuild` here.
-- **Time**: several hours for the third-party stack before the ONLYOFFICE
-  solution itself starts compiling.
-
-### Bugs fixed along the way
-
-`base._call_vcvarsall_and_return_env()` split `subprocess` output as `str`
-while `Popen` returned `bytes`, so it raised `TypeError` on Python 3 and never
-produced a usable MSVC environment. Fixed in this fork.
-
-## Remaining phases
-
-Phases 6–8 (installer, functional testing, release) all consume the built
-`PWPresentation.exe` and are blocked behind the C++ build. Everything that can
-be prepared ahead of it already is:
-
-- Inno Setup 7 installed
-- `desktop-apps/package/inno/defines.iss` rebranded
-- Icons generated for the app and for `.pptx` / `.ppt` / `.pps` / `.ppsx` /
-  `.odp` / `.potx`
+`deploy_desktop.py` produces `build_tools/out/win_64/onlyoffice/DesktopEditors/`;
+`desktop-apps/package/make_inno.ps1 -CompanyName PW -ProductName PWPresentation`
+drives Inno Setup (installed: Inno Setup 7, `C:\Program Files\Inno Setup 7`).
+The installer associates only ppt/pptx/pps/ppsx/odp/pot/potx/pptm, registers a
+single ShellNew entry and start-menu jump entry, and no update service.
