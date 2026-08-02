@@ -175,7 +175,10 @@ def ninja_windows_make(args, is_64=True, is_debug=False, is_arm=False):
   base.cmd("ninja", ["-C", directory_out, "v8_wrappers"])
   if is_arm:
     base.copy_file('./' + directory_out + '/obj/v8_wrappers.lib', './' + directory_out + '/x64/obj/v8_wrappers.lib')
-  base.cmd("ninja", ["-C", directory_out])
+  # Build only what core links (v8_monolith; v8_wrappers above). The default
+  # 'all' target also runs the copy_cdb test-helper step, which requires
+  # debugger redistributables newer Windows SDKs no longer ship.
+  base.cmd("ninja", ["-C", directory_out, "v8_monolith"])
   base.delete_file("./" + directory_out + "/obj/v8_wrappers.ninja")
   base.move_file("./" + directory_out + "/obj/v8_wrappers.ninja.bak", "./" + directory_out + "/obj/v8_wrappers.ninja")
   return
