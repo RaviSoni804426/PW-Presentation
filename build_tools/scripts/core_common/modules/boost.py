@@ -103,10 +103,17 @@ def make():
 
     # add "define=_ITERATOR_DEBUG_LEVEL=0" to b2 args before install for disable _ITERATOR_DEBUG_LEVEL
     if (-1 != config.option("platform").find("win_64")) and not base.is_file("../build/win_64/lib/libboost_system-" + win_vs_version + "-mt-x64-1_72.lib"):
-      base.cmd("bootstrap.bat", [win_boot_arg])
-      base.cmd("b2.exe", ["headers"])
-      base.cmd("b2.exe", ["--clean"])
-      base.cmd("b2.exe", ["--prefix=./../build/win_64", "link=static", "--with-filesystem", "--with-system", "--with-date_time", "--with-regex", "--toolset=" + win_toolset, "address-model=64", "install"])
+      # Run under an explicit vcvarsall environment (the pattern upstream already
+      # uses for win_arm64). bootstrap.bat's own Visual Studio detection cannot
+      # find installs outside the default Program Files layout.
+      vcvarsall_call = ("call \"" + config.option("vs-path") + "/vcvarsall.bat\" x64" + base.vcvars_ver_arg())
+      boost_bat = []
+      boost_bat.append(vcvarsall_call)
+      boost_bat.append("call bootstrap.bat " + win_boot_arg)
+      boost_bat.append("call b2.exe headers")
+      boost_bat.append("call b2.exe --clean")
+      boost_bat.append("call b2.exe --prefix=./../build/win_64 link=static --with-filesystem --with-system --with-date_time --with-regex --toolset=" + win_toolset + " address-model=64 install")
+      base.run_as_bat(boost_bat)
     if (-1 != config.option("platform").find("win_32")) and not base.is_file("../build/win_32/lib/libboost_system-" + win_vs_version + "-mt-x32-1_72.lib"):
       base.cmd("bootstrap.bat", [win_boot_arg])
       base.cmd("b2.exe", ["headers"])

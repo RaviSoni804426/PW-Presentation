@@ -179,80 +179,32 @@ procedure initExtensions;
 var
   prefix: string;
 begin
-#ifdef _ONLYOFFICE
-  SetArrayLength(AudioExts, 28);
-#else
-  SetArrayLength(AudioExts, 27);
-#endif
+  { PW Presentation associates presentation formats only. Icon indices refer
+    to the icon order compiled into projicons (see its version.rc). }
+  SetArrayLength(AudioExts, 8);
   SetArrayLength(AudioExtEnabled,  GetArrayLength(AudioExts));
 
-  AudioExts[0]  := 'DOC';
-  AudioExts[1]  := 'DOCX';
-  AudioExts[2]  := 'XLS';
-  AudioExts[3]  := 'XLSX';
-  AudioExts[4]  := 'PPT';
-  AudioExts[5]  := 'PPTX';
-  AudioExts[6]  := 'PPS';
-  AudioExts[7]  := 'PPSX';
-  AudioExts[8]  := 'ODT';
-  AudioExts[9]  := 'ODS';
-  AudioExts[10] := 'ODP';
-  AudioExts[11] := 'RTF';
-//  AudioExts[12] := 'TXT';
-  AudioExts[12] := 'CSV';
-  AudioExts[13] := 'PDF';
-  AudioExts[14] := 'DJVU';
-  AudioExts[15] := 'XPS';
-  AudioExts[16] := 'POT';
-  AudioExts[17] := 'PPTM';
-  AudioExts[18] := 'EPUB';
-  AudioExts[19] := 'FB2';
-  AudioExts[20] := 'DOTX';
-  AudioExts[21] := 'OXPS';
-  AudioExts[22] := 'XLSB';
-  AudioExts[23] := 'FODS';
-  AudioExts[24] := 'FODT';
-  AudioExts[25] := 'VSDX';
-  AudioExts[26] := 'XLSM';
-#ifdef _ONLYOFFICE
-  AudioExts[27] := 'DOCXF';
-#endif
+  AudioExts[0]  := 'PPT';
+  AudioExts[1]  := 'PPTX';
+  AudioExts[2]  := 'PPS';
+  AudioExts[3]  := 'PPSX';
+  AudioExts[4]  := 'ODP';
+  AudioExts[5]  := 'POT';
+  AudioExts[6]  := 'POTX';
+  AudioExts[7]  := 'PPTM';
 
   SetArrayLength(ExtensionRegistryInfo,  GetArrayLength(AudioExts));
 
   prefix := '{#ASCC_REG_PREFIX}' + '.';
 
-  ExtensionRegistryInfo[0]  := prefix + 'Document.1:'   + ExpandConstant('{cm:extDOC}')             + ':' + '11';
-  ExtensionRegistryInfo[1]  := prefix + 'Document.12:'  + ExpandConstant('{cm:extDOCX}')            + ':' + '7';
-  ExtensionRegistryInfo[2]  := prefix + 'Sheet.1:'      + ExpandConstant('{cm:extXLS}')             + ':' + '22';
-  ExtensionRegistryInfo[3]  := prefix + 'Sheet.12:'     + ExpandConstant('{cm:extXLSX}')            + ':' + '10';
-  ExtensionRegistryInfo[4]  := prefix + 'Show.1:'       + ExpandConstant('{cm:extPPT}')             + ':' + '1';
-  ExtensionRegistryInfo[5]  := prefix + 'Show.12:'      + ExpandConstant('{cm:extPPTX}')            + ':' + '9';
-  ExtensionRegistryInfo[6]  := prefix + 'SlideShow.1:'  + ExpandConstant('{cm:extPPS}')             + ':' + '2';
-  ExtensionRegistryInfo[7]  := prefix + 'SlideShow.12:' + ExpandConstant('{cm:extPPSX}')            + ':' + '8';
-  ExtensionRegistryInfo[8]  := prefix + 'Document.2:'   + ExpandConstant('{cm:extODT}')             + ':' + '18';
-  ExtensionRegistryInfo[9]  := prefix + 'Sheet.2:'      + ExpandConstant('{cm:extODS}')             + ':' + '23';
-  ExtensionRegistryInfo[10] := prefix + 'Show.2:'       + ExpandConstant('{cm:extODP}')             + ':' + '3';
-  ExtensionRegistryInfo[11] := prefix + 'Rtf:'          + ExpandConstant('{cm:extRTF}')             + ':' + '19';
-  //ExtensionRegistryInfo[12] := prefix + 'Txt:'                                                      + ':' + '14';
-  ExtensionRegistryInfo[12] := prefix + 'Csv:'          + ExpandConstant('{cm:extCSV}')             + ':' + '24';
-  ExtensionRegistryInfo[13] := prefix + 'Pdf:'          + ExpandConstant('{cm:extPDF}')             + ':' + '5';
-  ExtensionRegistryInfo[14] := prefix + 'DjVu:'         + ExpandConstant('{cm:extDJVU}')            + ':' + '4';
-  ExtensionRegistryInfo[15] := prefix + 'Xps:'          + ExpandConstant('{cm:extXPS}')             + ':' + '6';
-  ExtensionRegistryInfo[16] := prefix + 'Pot:'          + ExpandConstant('{cm:extPOT}')             + ':' + '26';
-  ExtensionRegistryInfo[17] := prefix + 'Pptm:'         + ExpandConstant('{cm:extPPTM}')            + ':' + '27';
-  ExtensionRegistryInfo[18] := prefix + 'Epub:'         + ExpandConstant('{cm:extEPUB}')            + ':' + '28';
-  ExtensionRegistryInfo[19] := prefix + 'Fb2:'          + ExpandConstant('{cm:extFB2}')             + ':' + '29';
-  ExtensionRegistryInfo[20] := prefix + 'Dotx:'         + ExpandConstant('{cm:extDOTX}')            + ':' + '30';
-  ExtensionRegistryInfo[21] := prefix + 'Oxps:'         + ExpandConstant('{cm:extOXPS}')            + ':' + '31';
-  ExtensionRegistryInfo[22] := prefix + 'Xlsb:'         + ExpandConstant('{cm:extXLSB}')            + ':' + '32';
-  ExtensionRegistryInfo[23] := prefix + 'Fods:'         + ExpandConstant('{cm:extFODS}')            + ':' + '34';
-  ExtensionRegistryInfo[24] := prefix + 'Fodt:'         + ExpandConstant('{cm:extFODT}')            + ':' + '35';
-  ExtensionRegistryInfo[25] := prefix + 'Vsdx:'         + ExpandConstant('{cm:extVSDX}')            + ':' + '36';
-  ExtensionRegistryInfo[26] := prefix + 'Xlsm:'         + ExpandConstant('{cm:extXLSM}')            + ':' + '37';
-#ifdef _ONLYOFFICE
-  ExtensionRegistryInfo[27] := prefix + 'Docxf:'        + ExpandConstant('{cm:extDOCXF}')           + ':' + '13';
-#endif
+  ExtensionRegistryInfo[0]  := prefix + 'Show.1:'       + ExpandConstant('{cm:extPPT}')             + ':' + '1';
+  ExtensionRegistryInfo[1]  := prefix + 'Show.12:'      + ExpandConstant('{cm:extPPTX}')            + ':' + '9';
+  ExtensionRegistryInfo[2]  := prefix + 'SlideShow.1:'  + ExpandConstant('{cm:extPPS}')             + ':' + '2';
+  ExtensionRegistryInfo[3]  := prefix + 'SlideShow.12:' + ExpandConstant('{cm:extPPSX}')            + ':' + '8';
+  ExtensionRegistryInfo[4]  := prefix + 'Show.2:'       + ExpandConstant('{cm:extODP}')             + ':' + '3';
+  ExtensionRegistryInfo[5]  := prefix + 'Pot:'          + ExpandConstant('{cm:extPOT}')             + ':' + '26';
+  ExtensionRegistryInfo[6]  := prefix + 'Potx:'         + ExpandConstant('{cm:extPOT}')             + ':' + '26';
+  ExtensionRegistryInfo[7]  := prefix + 'Pptm:'         + ExpandConstant('{cm:extPPTM}')            + ':' + '27';
 end;
 
 procedure ChlbAudioClickCheck(Sender: TObject);
@@ -451,13 +403,8 @@ begin
     dir := 'default';
   end;
 
-  args := ['new.docx:.docx:.Document.12:7:1000:1100',
-           'new.pptx:.pptx:.Show.12:9:1002:1102',
-           'new.xlsx:.xlsx:.Sheet.12:10:1001:1101'
-#ifdef _ONLYOFFICE
-           ,'new.pdf:.pdf:.Pdf:5:1003:1103'
-#endif
-           ];
+  ; PW Presentation registers only the presentation ShellNew entry.
+  args := ['new.pptx:.pptx:.Show.12:9:1002:1102'];
 
   GetWindowsVersionEx(version);
   progpath := ExpandConstant('{app}\converter\empty\' + dir);
