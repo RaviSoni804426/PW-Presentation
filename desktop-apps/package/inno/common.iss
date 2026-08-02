@@ -33,7 +33,9 @@
 #include BRANDING_DIR + '\branding.iss'
 #endif
 
-#define sUpgradeCode                 "607FEE744E0B34C449B45E9F419BB297"
+; PW Presentation's own upgrade code -- must not collide with ONLYOFFICE's,
+; or installs would treat each other as upgrade targets.
+#define sUpgradeCode                 "11B4DDF5ECA84CE29D4BD3DAD924F2E8"
 
 [Setup]
 AppName                   ={#sAppName}
