@@ -67,9 +67,6 @@ $(document).ready(function() {
                     <span class="text" l10n>${utils.Lang.actTemplates}</span>
                 </a>
               </li>
-              <li class="menu-item separator"></li>
-              <section id="idx-sidebar-portals" class="connect">
-              </section>
               <li class="menu-item devider"></li>
               <li class="menu-item">
                   <a action="settings">
@@ -79,16 +76,6 @@ $(document).ready(function() {
                       </svg>
                     </div>
                     <span class="text" l10n>${utils.Lang.actSettings}</span>
-                  </a>
-              </li>
-              <li class="menu-item hidden">
-                  <a action="about">
-                    <div class="icon-box">
-                      <svg class="icon" data-iconname="about" data-precls="tool-icon">
-                          <use href="#about"></use>
-                      </svg>
-                    </div>
-                    <span class="text" l10n>${utils.Lang.actAbout}</span>
                   </a>
               </li>
             </div>
@@ -118,13 +105,10 @@ $(document).ready(function() {
         window.app.controller.templates = (new ControllerTemplates).init();
     window.app.controller.recent = (new ControllerRecent).init();
     window.app.controller.folders = (new ControllerFolders).init();
-    window.app.controller.about = (new ControllerAbout).init();
     window.app.controller.settings = (new ControllerSettings).init();
 
-    if (!!window.ControllerPortals)
-        window.app.controller.portals = (new ControllerPortals({
-            placeholder: '#idx-sidebar-portals',
-        })).init();
+    // PW Presentation ships without the cloud-connect and About panels, so
+    // their controllers are not created and their sidebar entries are gone.
 
     !!window.ControllerExternalPanel && (window.app.controller.externalpanel = (new ControllerExternalPanel({})).init());
 
@@ -138,16 +122,6 @@ $(document).ready(function() {
         if ( !!utils.inParams.panel && $(`.action-panel.${utils.inParams.panel}`).length )
             selectAction(utils.inParams.panel);
         else selectAction('recents');
-    }
-
-    $('#placeholder').on('click', '.newportal', function(){
-        CommonEvents.fire("portal:create");
-    });
-
-    if (!window.config.portals.checklist) {
-        $('.tools-connect').hide();
-        hideAction('connect');
-        console.log('There are no cloud providers');
     }
 
     if (!utils.inParams.waitingloader)

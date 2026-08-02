@@ -83,10 +83,7 @@
                                     </div>
                                 </div>
                                 <div id='idx-nav-templates'>
-                                    <a data-value='Documents' class='nav-item selected' l10n>${_lang.tplDocument}</a>
-                                    <a data-value='Spreadsheets' class='nav-item' l10n>${_lang.tplSpreadsheet}</a>
-                                    <a data-value='Presentations' class='nav-item' l10n>${_lang.tplPresentation}</a>
-                                    <a data-value='PDFs' class='nav-item' l10n>${_lang.tplPDF}</a>
+                                    <a data-value='Presentations' class='nav-item selected' l10n>${_lang.tplPresentation}</a>
                                 </div>
                                 <div id="search-result" class="search-result" style="display: none;"></div>
                                     <div id="search-no-results" class="search-no-results" style="display: none;">
@@ -272,7 +269,8 @@
                 (this.tmpls || tmpls)
                     .forEach(item => {
                         const type = utils.formatToEditor(item.type);
-                        if (['word', 'cell', 'slide', 'pdf'].includes(type)) {
+                        // PW Presentation lists presentation templates only.
+                        if (['slide'].includes(type)) {
                             // this.templates.add(new FileTemplateModel(item));
 
                             const m = this.templates.find('path', item.path);
@@ -338,10 +336,7 @@
         
         const applyFilter = function($panel) {
             const selectedType = {
-                'Documents': 'word',
-                'Spreadsheets': 'cell',
-                'Presentations': 'slide',
-                'PDFs': 'pdf'
+                'Presentations': 'slide'
             }[$('.nav-item.selected', $panel).data('value')];
 
             const search = $('#template-search').val() || '';
