@@ -29,6 +29,9 @@ desktop-apps/win-linux/build/
 desktop-apps/win-linux/extras/**/build/
 desktop-sdk/ChromiumBasedEditors/**/build/
 
+# Version resource files qmake generates per project during a build
+desktop-sdk/**/*_resource.rc
+
 # Compiled objects from a local build
 *.obj
 *.ilk
@@ -50,3 +53,7 @@ npm-debug.log*
 *.suo
 Thumbs.db
 .DS_Store
+
+# Working previews from asset generation; screenshot-home.png is the kept one
+branding/_home.png
+branding/icons/_*.png
