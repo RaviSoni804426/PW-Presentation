@@ -90,7 +90,7 @@
         <file alias="arrow_down_1.5x.png">res/icons/arrow_down@1.5x.png</file>
         <file alias="arrow_down_1.75x.png">res/icons/arrow_down@1.75x.png</file>
         <file alias="arrow_down_2x.png">res/icons/arrow_down@2x.png</file>
-        <file alias="app.ico">res/icons/desktopeditors.ico</file>
+        <file alias="app.ico">res/icons/pwpresentation.ico</file>
         <file>res/icons/splash.svg</file>
         <file alias="logo_light.svg">res/icons/logo_light.svg</file>
         <file alias="logo_light.png">res/icons/logo_light.png</file>
