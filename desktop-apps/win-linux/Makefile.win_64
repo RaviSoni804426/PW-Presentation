@@ -877,7 +877,7 @@ build\win_64\rcc\qrc_resources.cpp: resources.qrc \
 		res\icons\checkbox@1.75x.png \
 		res\icons\title\minimize_kde_pressed_light.svg \
 		res\icons\title\maximize_light.svg \
-		res\icons\desktopeditors.ico \
+		res\icons\pwpresentation.ico \
 		res\icons\title\close_unix_hover.svg \
 		res\icons\title\close_kde_pressed.svg \
 		res\icons\logo_dark@1.25x.png \
