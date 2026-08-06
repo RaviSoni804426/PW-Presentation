@@ -59,7 +59,12 @@ Name: "assoc_odp";  Description: "Open .odp files with {#AppName}";  GroupDescri
 ; bare "*.bak" - ONLYOFFICE ships real product files with that extension
 ; (dictionaries/hyph_sl_SI.dic.bak), and excluding those silently drops
 ; product data. Only the suffixes our patch scripts create are listed.
-Source: "{#SourceDir}\*"; DestDir: "{app}"; Excludes: "*.bak-*,*.bak2,*.bak3"; \
+;
+; unins000.* is excluded because SourceDir defaults to a deployed install
+; directory, and that directory contains the uninstaller from whichever install
+; created it. Shipping it would put a stale uninstaller inside the payload,
+; which then lands next to the real one Inno generates.
+Source: "{#SourceDir}\*"; DestDir: "{app}"; Excludes: "*.bak-*,*.bak2,*.bak3,unins000.*"; \
     Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
