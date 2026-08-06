@@ -10,6 +10,10 @@ CONFIG  -= debug_and_release debug_and_release_target
 TEMPLATE = app
 
 INCLUDEPATH += $$PWD/src
+# The editor's defines.h (and the defines_p.h it pulls in) so the launcher can
+# read APP_MUTEX_NAME from the one place it is defined instead of repeating it.
+INCLUDEPATH += $$PWD/../../src \
+               $$PWD/../../src/prop
 HEADERS += $$PWD/src/version.h \
            $$PWD/src/resource.h
 SOURCES += $$PWD/src/main.cpp
@@ -63,6 +67,10 @@ build_xp {
             -lRpcrt4 \
             -lole32
 }
+
+# EnumWindows / IsWindowVisible / GetWindowThreadProcessId, used by the
+# single-instance recovery in main.cpp. Nothing here needed user32 before.
+LIBS += -luser32
 
 OBJECTS_DIR = $$DESTDIR/obj
 MOC_DIR = $$DESTDIR/moc

@@ -50,6 +50,9 @@ public:
 
     bool isPrimary() const;
     bool sendMessage(const QByteArray &message);
+    // Claim the primary role when the process that owns the mutex is no
+    // longer answering. See the call site in main.cpp.
+    bool takeOverAsPrimary();
 
 signals:
     void receivedMessage(QByteArray message);
