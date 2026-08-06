@@ -42,6 +42,8 @@
 #define RECEIVER_WINDOW WINDOW_CLASS_NAME
 #define RETRIES_COUNT 10
 #define RETRIES_DELAY_MS 500
+// Ceiling on how long we wait for a primary to acknowledge the command line.
+#define SEND_TIMEOUT_MS 5000
 
 
 SingleApplication::SingleApplication(int &argc, char *argv[]) :
@@ -90,11 +92,32 @@ bool SingleApplication::sendMessage(const QByteArray &message)
         COPYDATASTRUCT MyCDS = {1};
         MyCDS.cbData = sizeof(WCHAR) * (wcslen(cm_line) + 1);
         MyCDS.lpData = cm_line;
-        SendMessage(hwnd, WM_COPYDATA, WPARAM(0), LPARAM((LPVOID)&MyCDS));
+
+        /* SendMessage blocks until the target pumps the message. A primary
+           that still owns its window but has stopped responding would hang
+           this process forever - which is what left windowless instances
+           lying around, one per click, none of them ever showing a window.
+           Give up after a few seconds and report failure so the caller can
+           take over as primary instead. */
+        DWORD_PTR result = 0;
+        LRESULT sent = SendMessageTimeout(hwnd, WM_COPYDATA, WPARAM(0), LPARAM((LPVOID)&MyCDS),
+                                          SMTO_ABORTIFHUNG, SEND_TIMEOUT_MS, &result);
         delete[] cm_line;
-        return true;
+        return sent != 0;
     }
     return false;
+}
+
+bool SingleApplication::takeOverAsPrimary()
+{
+    if (m_isPrimary)
+        return true;
+
+    // The mutex is held by a process that never answered. Register the
+    // receiver window ourselves and carry on as the primary instance.
+    startPrimary();
+    m_isPrimary = (m_hWnd != nullptr);
+    return m_isPrimary;
 }
 
 void SingleApplication::startPrimary()

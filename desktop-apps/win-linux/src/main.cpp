@@ -161,8 +161,22 @@ int main( int argc, char *argv[] )
             }
         }
         bool res = app.sendMessage(_out_args.toUtf8());
-        CLogger::log("The instance is not primary and will be closed. Parameter sending status: " + QString::number(res));
-        return 0;
+        if ( res ) {
+            CLogger::log("The instance is not primary and will be closed. Parameter sending status: " + QString::number(res));
+            return 0;
+        }
+
+        /* The mutex is held, but nothing answered within the retry window, so
+           the owning process is gone or wedged - a crash or a forced kill
+           leaves one behind with no window. Exiting here is what made clicking
+           the icon appear to do nothing at all: no window, no error, and every
+           further click piled up another stuck process behind the same mutex.
+           Take the primary role instead and start normally. */
+        CLogger::log("The mutex is held but no primary window answered; taking over as primary.");
+        if ( !app.takeOverAsPrimary() ) {
+            CLogger::log("Could not take over as primary; closing.");
+            return 0;
+        }
     }
 
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
